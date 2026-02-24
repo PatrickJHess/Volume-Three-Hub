@@ -1,0 +1,169 @@
+
+//* Remove the top header bar entirely (where the hamburger lives) */
+header.bd-header {
+    display: none !important;
+}
+
+/* Remove the toggle buttons specifically if the header remains */
+.primary-sidebar-toggle, 
+.secondary-sidebar-toggle, 
+button.sidebar-toggle {
+    display: none !important;
+}
+
+/* Remove the breadcrumbs and top article header icons */
+.bd-header-article {
+    display: none !important;
+}
+
+/* Remove the left sidebar container itself */
+.bd-sidebar-primary {
+    display: none !important;
+}
+
+/* Adjust the main content area to fill the gap left by the header/sidebar */
+.bd-main .bd-content {
+    margin-top: 0 !important;
+    padding-top: 20px !important;
+}
+
+/* 4. Kill the "Prev/Next" buttons at the bottom too for a cleaner "Hub" look */
+.prev-next-area {
+    display: none !important;
+}
+.bd-sidebar {
+    display: none !important;
+}
+
+.bd-main .bd-content {
+    max-width: 1100px !important; /* Prevents cards from getting too wide */
+    margin: 0 auto !important;     /* Centers the whole dashboard */
+    padding-top: 2rem !important;
+}
+
+/* --- CARDS: MODERN ELEVATION --- */
+.sd-card {
+    border: none !important;
+    border-radius: 14px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+.sd-card:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12) !important;
+    border: 1px solid rgba(0, 123, 255, 0.2) !important;
+}
+
+/* --- BUTTONS: FINTECH STYLE --- */
+.btn {
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    transition: 0.2s ease-in-out !important;
+    letter-spacing: 0.3px;
+    text-transform: none; /* Keeps chapter names looking natural */
+}
+
+/* Ensure icons have spacing */
+.fas, .fab {
+    margin-right: 6px;
+}
+
+/* Clean up the card headers */
+.sd-card-header {
+    background-color: #fcfcfc !important;
+    border-bottom: 1px solid #f1f1f1 !important;
+    font-weight: 700 !important;
+    color: #333;
+}
+
+/* Add a modern font import at the top */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+
+body {
+    background-color: #fcfcfd;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Gradient Headers for a "Pro" look */
+.bg-primary {
+    background: linear-gradient(135deg, #0056b3 0%, #003d7a 100%) !important;
+}
+
+.bg-dark {
+    background: linear-gradient(135deg, #2c3e50 0%, #000000 100%) !important;
+}
+
+/* Skill Badges (Pills) */
+.badge-tech {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-right: 4px;
+    background: #e9ecef;
+    color: #495057;
+    text-transform: uppercase;
+}
+
+/* Improve Card Title visibility */
+.sd-card-title {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: #1a1a1a;
+}
+/* Make the Documentation button feel primary */
+.btn-outline-dark {
+    border: 2px solid #212529 !important;
+    color: #212529 !important;
+    background: transparent;
+}
+
+.btn-outline-dark:hover {
+    background: #212529 !important;
+    color: #ffffff !important;
+    transform: translateX(5px); /* Subtle slide effect on hover */
+}
+
+/* Style the badges to look like high-end labels */
+.badge-tech {
+    background: #f0f2f5;
+    border: 1px solid #d1d9e0;
+    color: #444;
+    padding: 3px 12px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+/* Apply the slide's color palette to the body */
+body {
+    background-color: #fdfbf7 !important; /* Cream base */
+    background-image: 
+        radial-gradient(circle at top right, rgba(212, 175, 55, 0.05), transparent 400px), /* Subtle Gold hint */
+        radial-gradient(circle at bottom left, rgba(0, 86, 179, 0.03), transparent 400px), /* Subtle Blue hint */
+        linear-gradient(135deg, #fdfbf7 0%, #ffffff 100%);
+    background-attachment: fixed;
+    color: #2c3e50; /* Dark blue-grey text for better legibility */
+}
+
+/* Update the Card to look like it belongs on the slide */
+.sd-card {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px); /* Modern 'glass' effect */
+    border-top: 4px solid #d4af37 !important; /* Gold accent line from the slide */
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Adjust Tech Badges to match the blue/gold theme */
+.badge-tech {
+    background-color: #f1f4f8 !important;
+    border: 1px solid #d1d9e0 !important;
+    color: #004085 !important; /* Navy blue text */
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
