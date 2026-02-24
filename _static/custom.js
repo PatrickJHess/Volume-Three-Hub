@@ -1,12 +1,15 @@
-f/* _static/custom.js */
 function executeCseSearch() {
     var query = document.getElementById('cseSearchInput').value;
     if (query) {
-        var cx = 'e3042cd2d713e4dd2';
-        // Construct the absolute URL
-        var url = 'https://cse.google.com/cse?cx=' + cx + '&q=' + encodeURIComponent(query);
+        // This targets the root, which covers all 10 repos (Hub, Vol-2, Vol-3, etc.)
+        var siteFilter = "site:patrickjhess.github.io";
         
-        // Force the browser to open a new web tab, bypassing the local file protocol
+        // This combines the user's word with the site restriction
+        var fullQuery = query + " " + siteFilter;
+        
+        // This sends them to a standard Google result page in a new tab
+        var url = 'https://www.google.com/search?q=' + encodeURIComponent(fullQuery);
+        
         window.open(url, '_blank');
     }
 }
