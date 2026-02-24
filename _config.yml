@@ -1,0 +1,15 @@
+title: 'Finance And Python: An Exercise In Learning By Doing'
+author: Financial Python
+sphinx:
+  extra_extensions:
+    - sphinx_design
+  config:
+    html_static_path: ["_static"]
+    html_css_files:
+      - custom.css
+html:
+  home_page_in_toc: false
+  # This helps remove some of the default header clutter
+  navbar_persistent: []
+  extra_javascript:
+    - _static/custom.js
