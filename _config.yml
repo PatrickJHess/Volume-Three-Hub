@@ -9,12 +9,14 @@ sphinx:
       - custom.css
     html_extra_path:
       - google6c5f2d11d0c13eff.html
+    html_content:
+      extra_head_bits: |
+        <meta name="google-site-verification" content="e3042cd2d713e4dd2" />
 html:
   home_page_in_toc: false
   # This helps remove some of the default header clutter
   navbar_persistent: []
   extra_javascript:
     - _static/custom.js
-  extra_navbar: |
-    <meta name="google-site-verification" content="OIzJK06t7c0LNCuYyeCQDqN9RgVv9bRHJumrQbHfFZw" />
+
 
