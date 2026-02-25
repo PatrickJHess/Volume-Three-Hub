@@ -1,0 +1,13 @@
+##  <i class="fas fa-mouse" style="color: #4682B4; font-size: 1.2rem; opacity: 0.7;"></i> **Find Out More About Each Chapter**
+:::{grid-item-card} <i class="fas fa-chevron-down" style="color: #4682B4; font-size: 1.2rem; opacity: 0.7;"></i>Chapter Descriptions
+:::{grid-item-card} 🗄️ Chapter Descriptions
+<p class="text-secondary mb-2">
+  Financial concepts of present value, arbitrage, spot, and forward rates are implemented with Python.
+</p>
+
+<ul class="small text-muted" style="list-style-type: none; padding-left: 0;">
+  <li><i class="fas fa-check-circle me-2"></i> Basic bond pricing, defining the term structure and the state of financial markets</li>
+  <li><i class="fas fa-check-circle me-2"></i> Accessing external data from URL addresses, Pandas, NumPy, and custom modules</li>
+  <li><i class="fas fa-check-circle me-2"></i> Actively engaged in applying financial concepts with real data</li>
+  <li><i class="fas fa-check-circle me-2"></i> Using custom functions to bridge the gap between theory and practice</li>
+</ul>

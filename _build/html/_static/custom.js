@@ -1,12 +1,15 @@
-f/* _static/custom.js */
 function executeCseSearch() {
-    var query = document.getElementById('cseSearchInput').value;
-    if (query) {
-        var cx = 'e3042cd2d713e4dd2';
-        // Construct the absolute URL
-        var url = 'https://cse.google.com/cse?cx=' + cx + '&q=' + encodeURIComponent(query);
-        
-        // Force the browser to open a new web tab, bypassing the local file protocol
-        window.open(url, '_blank');
+    var inputElement = document.getElementById('cseSearchInput');
+    if (inputElement) {
+        var rawQuery = inputElement.value.trim(); // Get "spot"
+        if (rawQuery !== "") {
+            // We manually build the query to ensure "chapter one" isn't hidden in a variable
+            var targetSite = "site:patrickjhess.github.io";
+            var finalSearchString = rawQuery + " " + targetSite;
+            
+            var url = 'https://www.google.com/search?q=' + encodeURIComponent(finalSearchString);
+            
+            window.open(url, '_blank');
+        }
     }
 }

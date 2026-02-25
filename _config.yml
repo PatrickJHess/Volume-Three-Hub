@@ -13,3 +13,7 @@ html:
   navbar_persistent: []
   extra_javascript:
     - _static/custom.js
+  extra_navbar: |
+    <meta name="google-site-verification" content="OIzJK06t7c0LNCuYyeCQDqN9RgVv9bRHJumrQbHfFZw" />
+  extra_files:
+    - google12345.html  # Use your actual filename here
