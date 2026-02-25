@@ -7,6 +7,8 @@ sphinx:
     html_static_path: ["_static"]
     html_css_files:
       - custom.css
+    html_extra_path:
+      - google6c5f2d11d0c13eff.html
 html:
   home_page_in_toc: false
   # This helps remove some of the default header clutter
@@ -15,5 +17,4 @@ html:
     - _static/custom.js
   extra_navbar: |
     <meta name="google-site-verification" content="OIzJK06t7c0LNCuYyeCQDqN9RgVv9bRHJumrQbHfFZw" />
-  extra_files:
-    - google6c5f2d11d0c13eff.html  # Use your actual filename here
+
