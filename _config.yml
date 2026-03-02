@@ -6,9 +6,9 @@ html:
   baseurl: "https://patrickjhess.github.io/Volume-Three-Hub/"
 # Connects the 🤖 Bot and Link-Fixer
   extra_javascript:
-    - /Volume-Three-Hub/_static/custom.js
+    - _static/custom.js
   extra_css:
-    - /Volume-Three-Hub/_static/custom.css
+    - _static/custom.css
   home_page_in_toc: false
   # This helps remove some of the default header clutter
   navbar_persistent: []
@@ -25,15 +25,10 @@ sphinx:
     html_baseurl: "https://patrickjhess.github.io/Volume-Three-Hub/"
     sitemap_url_scheme: "{link}"
     html_static_path: ["_static"]
-    html_copy_source: true
-    html_use_index: true
-    html_search_language: 'en'
+
     html_extra_path:
       - google6c5f2d11d0c13eff.html
-    html_js_files:
-      - ["https://cse.google.com/cse.js?cx=e3042cd2d713e4dd2", {async: "async"}]
     html_context:
       extra_head_bits: |
         <meta name="google-site-verification" content="e3042cd2d713e4dd2" />
-
 

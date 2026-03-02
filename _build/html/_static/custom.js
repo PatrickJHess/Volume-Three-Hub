@@ -1,44 +1,57 @@
-/**
- * Universal Multi-Highlight & Scroll
- * 1. Scrolls to the first match via Native Browser Text Fragment
- * 2. Highlights every other match on the page manually
- */
-function highlightAllMatches() {
-    const referrer = document.referrer;
-    if (!referrer.includes("google.com")) return;
-
-    try {
-        const url = new URL(referrer);
-        const query = url.searchParams.get('q');
-        if (!query) return;
-
-        // 1. Force the Scroll to the FIRST instance
-        window.location.hash = `#:~:text=${encodeURIComponent(query)}`;
-
-        // 2. Manually Highlight ALL instances
-        const keywords = query.split(' ');
-        const regex = new RegExp(`(${keywords.join('|')})`, 'gi');
-        
-        // We use a TreeWalker to find all text nodes without breaking HTML tags
-        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-        let node;
-        const nodesToReplace = [];
-
-        while (node = walker.nextNode()) {
-            if (node.textContent.match(regex)) {
-                nodesToReplace.push(node);
-            }
+function executeCseSearch() {
+    var inputElement = document.getElementById('cseSearchInput');
+    if (inputElement) {
+        var rawQuery = inputElement.value.trim(); // Get "spot"
+        if (rawQuery !== "") {
+            // We manually build the query to ensure "chapter one" isn't hidden in a variable
+            var targetSite = "site:patrickjhess.github.io";
+            var finalSearchString = rawQuery + " " + targetSite;
+            
+            var url = 'https://www.google.com/search?q=' + encodeURIComponent(finalSearchString);
+            
+            window.open(url, '_blank');
         }
+    }
+}
+/**
+ * Universal Scroll-to-Search Handler
+ * Logic: Checks for Sphinx highlights first, then falls back to Google referrer.
+ */
+function handleSearchHighlighting() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const highlightTerm = urlParams.get('highlight');
+    const fromGoogle = document.referrer.includes("google.com");
 
-        nodesToReplace.forEach(textNode => {
-            const span = document.createElement('span');
-            span.innerHTML = textNode.textContent.replace(regex, '<mark class="custom-highlight">$1</mark>');
-            textNode.parentNode.replaceChild(span, textNode);
-        });
-
-    } catch (e) {
-        console.error("Multi-highlight failed.");
+    // 1. Handle Sphinx Internal Search
+    if (highlightTerm) {
+        setTimeout(() => {
+            const firstMatch = document.querySelector('.highlighted');
+            if (firstMatch) {
+                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 500); // Delay allows Sphinx to finish "painting" the yellow spans
+    } 
+    
+    // 2. Handle Google Search Referrer (if no internal highlight is present)
+    else if (fromGoogle) {
+        try {
+            const refUrl = new URL(document.referrer);
+            const googleQuery = refUrl.searchParams.get('q');
+            if (googleQuery) {
+                // We use the modern browser "Text Fragment" logic
+                // This forces the browser to find the text even if Sphinx didn't
+                const firstWord = googleQuery.split(' ')[0];
+                window.location.hash = `:~:text=${encodeURIComponent(googleQuery)}`;
+            }
+        } catch (e) {
+            console.log("Referrer clean-up failed, skipping scroll.");
+        }
     }
 }
 
-document.addEventListener("DOMContentLoaded", highlightAllMatches);
+// Execute once the DOM is fully interactive
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", handleSearchHighlighting);
+} else {
+    handleSearchHighlighting();
+}
