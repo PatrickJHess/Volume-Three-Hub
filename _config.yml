@@ -6,9 +6,9 @@ html:
   baseurl: "https://patrickjhess.github.io/Volume-Three-Hub/"
 # Connects the 🤖 Bot and Link-Fixer
   extra_javascript:
-    - _static/custom.js
+    - /Volume-Three-Hub/_static/custom.js
   extra_css:
-    - _static/custom.css
+    - /Volume-Three-Hub/_static/custom.css
   home_page_in_toc: false
   # This helps remove some of the default header clutter
   navbar_persistent: []

@@ -185,4 +185,16 @@ span.highlighted {
     background-color: #ffde59 !important;
     color: #000 !important;
 }
+/* Style for our manual highlights (all instances) */
+mark.custom-highlight {
+    background-color: #ffde59 !important;
+    color: #000 !important;
+    padding: 0;
+}
+
+/* Style for the browser's first-instance highlight */
+::target-text {
+    background-color: #ffde59 !important;
+    color: #000 !important;
+}
 
