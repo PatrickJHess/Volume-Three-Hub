@@ -1,58 +1,34 @@
-function executeCseSearch() {
-    var inputElement = document.getElementById('cseSearchInput');
-    if (inputElement) {
-        var rawQuery = inputElement.value.trim(); // Get "spot"
-        if (rawQuery !== "") {
-            // We manually build the query to ensure "chapter one" isn't hidden in a variable
-            var targetSite = "site:patrickjhess.github.io";
-            var finalSearchString = rawQuery + " " + targetSite;
-            
-            var url = 'https://www.google.com/search?q=' + encodeURIComponent(finalSearchString);
-            
-            window.open(url, '_blank');
+/**
+ * REPLACEMENT BLOCK
+ * This handles users coming specifically from a Google Search result.
+ */
+function handleGoogleSearchReferrer() {
+    // 1. Check if the user is arriving from a Google search page
+    const referrer = document.referrer;
+    if (referrer.includes("google.com")) {
+        try {
+            const refUrl = new URL(referrer);
+            const query = refUrl.searchParams.get('q'); // Extracts the searched terms
+
+            if (query) {
+                // 2. Use the modern Browser "Scroll-to-Text" feature
+                // This appends #:~:text= to the URL to force a native highlight
+                const textFragment = `#:~:text=${encodeURIComponent(query)}`;
+                
+                // We use replaceState so the "Back" button still works normally
+                window.location.hash = textFragment;
+                console.log("Scrolling to Google search term: " + query);
+            }
+        } catch (e) {
+            console.error("Google referrer parsing failed.");
         }
     }
 }
-/**
- * Universal Scroll-to-Search Handler
- * Logic: Checks for Sphinx highlights first, then falls back to Google referrer.
- */
-/**
- * Advanced Search & Scroll Handler
- * Uses an Interval to "poll" for the highlight in case of slow loading.
- */
-function forceScrollToHighlight() {
-    let attempts = 0;
-    const maxAttempts = 20; // Try for 4 seconds (20 * 200ms)
 
-    const scrollInterval = setInterval(() => {
-        // Sphinx uses the class 'highlighted'
-        const highlight = document.querySelector('.highlighted');
-        
-        if (highlight) {
-            clearInterval(scrollInterval);
-            highlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            console.log("Found highlight! Scrolling now...");
-            
-            // Brighten it up just in case CSS is lagging
-            highlight.style.backgroundColor = "#fffd00";
-            highlight.style.color = "#000";
-        }
-
-        attempts++;
-        if (attempts >= maxAttempts) {
-            clearInterval(scrollInterval);
-            console.log("Search highlight not found after 4 seconds.");
-        }
-    }, 200);
-}
-
-// Ignition Switch
+// THE IGNITION SWITCH
+// Ensures the page is ready before we try to move the scrollbar
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", forceScrollToHighlight);
+    document.addEventListener("DOMContentLoaded", handleGoogleSearchReferrer);
 } else {
-    forceScrollToHighlight();
+    handleGoogleSearchReferrer();
 }
-
-
-
