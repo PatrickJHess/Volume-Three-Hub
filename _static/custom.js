@@ -1,34 +1,35 @@
 /**
- * REPLACEMENT BLOCK
- * This handles users coming specifically from a Google Search result.
+ * Universal Search & Scroll Logic
+ * This works even if Google doesn't append parameters to the URL.
  */
-function handleGoogleSearchReferrer() {
-    // 1. Check if the user is arriving from a Google search page
+function attemptSearchScroll() {
     const referrer = document.referrer;
+    
+    // 1. Check if the user is coming from a Google Search
     if (referrer.includes("google.com")) {
         try {
             const refUrl = new URL(referrer);
-            const query = refUrl.searchParams.get('q'); // Extracts the searched terms
+            const query = refUrl.searchParams.get('q'); // Extracts "par yields"
 
             if (query) {
-                // 2. Use the modern Browser "Scroll-to-Text" feature
-                // This appends #:~:text= to the URL to force a native highlight
-                const textFragment = `#:~:text=${encodeURIComponent(query)}`;
+                // Encode and append the text fragment logic
+                const fragment = `#:~:text=${encodeURIComponent(query)}`;
                 
-                // We use replaceState so the "Back" button still works normally
-                window.location.hash = textFragment;
-                console.log("Scrolling to Google search term: " + query);
+                // This 'flicks' the browser to the text location
+                if (!window.location.hash.includes(':~:text=')) {
+                    window.location.hash = fragment;
+                    console.log("Found Google query: " + query + ". Scrolling...");
+                }
             }
         } catch (e) {
-            console.error("Google referrer parsing failed.");
+            console.log("No query found in referrer.");
         }
     }
 }
 
-// THE IGNITION SWITCH
-// Ensures the page is ready before we try to move the scrollbar
+// Run immediately once the page is interactive
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", handleGoogleSearchReferrer);
+    document.addEventListener("DOMContentLoaded", attemptSearchScroll);
 } else {
-    handleGoogleSearchReferrer();
+    attemptSearchScroll();
 }

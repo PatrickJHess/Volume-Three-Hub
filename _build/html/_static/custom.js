@@ -1,57 +1,34 @@
-function executeCseSearch() {
-    var inputElement = document.getElementById('cseSearchInput');
-    if (inputElement) {
-        var rawQuery = inputElement.value.trim(); // Get "spot"
-        if (rawQuery !== "") {
-            // We manually build the query to ensure "chapter one" isn't hidden in a variable
-            var targetSite = "site:patrickjhess.github.io";
-            var finalSearchString = rawQuery + " " + targetSite;
-            
-            var url = 'https://www.google.com/search?q=' + encodeURIComponent(finalSearchString);
-            
-            window.open(url, '_blank');
-        }
-    }
-}
 /**
- * Universal Scroll-to-Search Handler
- * Logic: Checks for Sphinx highlights first, then falls back to Google referrer.
+ * REPLACEMENT BLOCK
+ * This handles users coming specifically from a Google Search result.
  */
-function handleSearchHighlighting() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const highlightTerm = urlParams.get('highlight');
-    const fromGoogle = document.referrer.includes("google.com");
-
-    // 1. Handle Sphinx Internal Search
-    if (highlightTerm) {
-        setTimeout(() => {
-            const firstMatch = document.querySelector('.highlighted');
-            if (firstMatch) {
-                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 500); // Delay allows Sphinx to finish "painting" the yellow spans
-    } 
-    
-    // 2. Handle Google Search Referrer (if no internal highlight is present)
-    else if (fromGoogle) {
+function handleGoogleSearchReferrer() {
+    // 1. Check if the user is arriving from a Google search page
+    const referrer = document.referrer;
+    if (referrer.includes("google.com")) {
         try {
-            const refUrl = new URL(document.referrer);
-            const googleQuery = refUrl.searchParams.get('q');
-            if (googleQuery) {
-                // We use the modern browser "Text Fragment" logic
-                // This forces the browser to find the text even if Sphinx didn't
-                const firstWord = googleQuery.split(' ')[0];
-                window.location.hash = `:~:text=${encodeURIComponent(googleQuery)}`;
+            const refUrl = new URL(referrer);
+            const query = refUrl.searchParams.get('q'); // Extracts the searched terms
+
+            if (query) {
+                // 2. Use the modern Browser "Scroll-to-Text" feature
+                // This appends #:~:text= to the URL to force a native highlight
+                const textFragment = `#:~:text=${encodeURIComponent(query)}`;
+                
+                // We use replaceState so the "Back" button still works normally
+                window.location.hash = textFragment;
+                console.log("Scrolling to Google search term: " + query);
             }
         } catch (e) {
-            console.log("Referrer clean-up failed, skipping scroll.");
+            console.error("Google referrer parsing failed.");
         }
     }
 }
 
-// Execute once the DOM is fully interactive
+// THE IGNITION SWITCH
+// Ensures the page is ready before we try to move the scrollbar
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", handleSearchHighlighting);
+    document.addEventListener("DOMContentLoaded", handleGoogleSearchReferrer);
 } else {
-    handleSearchHighlighting();
+    handleGoogleSearchReferrer();
 }

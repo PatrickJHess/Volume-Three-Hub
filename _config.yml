@@ -25,7 +25,9 @@ sphinx:
     html_baseurl: "https://patrickjhess.github.io/Volume-Three-Hub/"
     sitemap_url_scheme: "{link}"
     html_static_path: ["_static"]
-
+    html_copy_source: true
+    html_use_index: true
+    html_search_language: 'en'
     html_extra_path:
       - google6c5f2d11d0c13eff.html
     html_context:
