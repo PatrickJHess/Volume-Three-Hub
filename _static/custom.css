@@ -167,3 +167,10 @@ body {
     border-radius: 4px;
 }
 
+/* Ensure the searched text actually looks different */
+.highlighted {
+    background-color: #fffd00;
+    font-weight: bold;
+    padding: 0 2px;
+}
+

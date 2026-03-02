@@ -13,3 +13,17 @@ function executeCseSearch() {
         }
     }
 }
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const highlightTerm = urlParams.get('highlight');
+
+    if (highlightTerm) {
+        // Wait a beat for Sphinx to apply its highlighting spans
+        setTimeout(() => {
+            const firstMatch = document.querySelector('.highlighted');
+            if (firstMatch) {
+                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 500);
+    }
+});
