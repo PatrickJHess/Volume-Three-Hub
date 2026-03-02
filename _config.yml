@@ -30,7 +30,10 @@ sphinx:
     html_search_language: 'en'
     html_extra_path:
       - google6c5f2d11d0c13eff.html
+    html_js_files:
+      - ["https://cse.google.com/cse.js?cx=e3042cd2d713e4dd2", {async: "async"}]
     html_context:
       extra_head_bits: |
         <meta name="google-site-verification" content="e3042cd2d713e4dd2" />
+
 
