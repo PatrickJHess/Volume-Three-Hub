@@ -1,35 +1,44 @@
 /**
- * Universal Search & Scroll Logic
- * This works even if Google doesn't append parameters to the URL.
+ * Universal Multi-Highlight & Scroll
+ * 1. Scrolls to the first match via Native Browser Text Fragment
+ * 2. Highlights every other match on the page manually
  */
-function attemptSearchScroll() {
+function highlightAllMatches() {
     const referrer = document.referrer;
-    
-    // 1. Check if the user is coming from a Google Search
-    if (referrer.includes("google.com")) {
-        try {
-            const refUrl = new URL(referrer);
-            const query = refUrl.searchParams.get('q'); // Extracts "par yields"
+    if (!referrer.includes("google.com")) return;
 
-            if (query) {
-                // Encode and append the text fragment logic
-                const fragment = `#:~:text=${encodeURIComponent(query)}`;
-                
-                // This 'flicks' the browser to the text location
-                if (!window.location.hash.includes(':~:text=')) {
-                    window.location.hash = fragment;
-                    console.log("Found Google query: " + query + ". Scrolling...");
-                }
+    try {
+        const url = new URL(referrer);
+        const query = url.searchParams.get('q');
+        if (!query) return;
+
+        // 1. Force the Scroll to the FIRST instance
+        window.location.hash = `#:~:text=${encodeURIComponent(query)}`;
+
+        // 2. Manually Highlight ALL instances
+        const keywords = query.split(' ');
+        const regex = new RegExp(`(${keywords.join('|')})`, 'gi');
+        
+        // We use a TreeWalker to find all text nodes without breaking HTML tags
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+        let node;
+        const nodesToReplace = [];
+
+        while (node = walker.nextNode()) {
+            if (node.textContent.match(regex)) {
+                nodesToReplace.push(node);
             }
-        } catch (e) {
-            console.log("No query found in referrer.");
         }
+
+        nodesToReplace.forEach(textNode => {
+            const span = document.createElement('span');
+            span.innerHTML = textNode.textContent.replace(regex, '<mark class="custom-highlight">$1</mark>');
+            textNode.parentNode.replaceChild(span, textNode);
+        });
+
+    } catch (e) {
+        console.error("Multi-highlight failed.");
     }
 }
 
-// Run immediately once the page is interactive
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", attemptSearchScroll);
-} else {
-    attemptSearchScroll();
-}
+document.addEventListener("DOMContentLoaded", highlightAllMatches);
