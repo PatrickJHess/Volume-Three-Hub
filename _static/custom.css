@@ -173,4 +173,16 @@ body {
     font-weight: bold;
     padding: 0 2px;
 }
+/* 1. Style for Internal Sphinx Search Highlights */
+span.highlighted {
+    background-color: #ffde59 !important;
+    color: #000 !important;
+    border-radius: 2px;
+}
+
+/* 2. Style for Google "Scroll-to-Text" Fragments */
+::target-text {
+    background-color: #ffde59 !important;
+    color: #000 !important;
+}
 
